@@ -49,7 +49,6 @@ class ExtensionConnection(RemoteConnection):
         utils.is_connectable(2828)
         self.transport = MarionetteTransport('127.0.0.1', 2828)
         self.transport.connect()
-        import pdb; pdb.set_trace()
         response = self.transport.send({"name": "newSession"})
 
 
