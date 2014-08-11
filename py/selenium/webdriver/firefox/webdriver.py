@@ -26,6 +26,9 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.firefox.extension_connection import ExtensionConnection
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
+from selenium.webdriver.common import utils
+
+from marionette_transport.transport import MarionetteTransport
 
 
 class WebDriver(RemoteWebDriver):
@@ -48,17 +51,24 @@ class WebDriver(RemoteWebDriver):
         if self.binary is None:
             self.binary = FirefoxBinary()
 
+        PORT = 2828  #utils.free_port()
+        self.profile.port = PORT
+        self.profile.update_preferences()
+
+        self.binary.launch_browser(self.profile)
+        utils.is_connectable(2828)
+
         if capabilities is None:
             capabilities = DesiredCapabilities.FIREFOX
 
         if proxy is not None:
             proxy.add_to_capabilities(capabilities)
 
-        RemoteWebDriver.__init__(self,
-            command_executor=ExtensionConnection("127.0.0.1", self.profile,
-            self.binary, timeout),
-            desired_capabilities=capabilities,
-            keep_alive=True)
+        self.transport = MarionetteTransport('127.0.0.1', 2828)
+        self.transport.connect()
+        import pdb; pdb.set_trace()
+        response = self.transport.send({"name": "newSession"})
+
         self._is_remote = False
 
     def quit(self):

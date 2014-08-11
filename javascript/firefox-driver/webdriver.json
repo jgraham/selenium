@@ -42,7 +42,10 @@
     "toolkit.networkmanager.disable": true,
     "toolkit.telemetry.prompted": 2,
     "toolkit.telemetry.enabled": false,
-    "toolkit.telemetry.rejected": true
+    "toolkit.telemetry.rejected": true,
+    "marionette.defaultPrefs.enabled": true,
+    "marionette.defaultPrefs.port": 2828,
+    "marionette.logging": true
   },
   "mutable": {
     "browser.dom.window.dump.enabled": true,
