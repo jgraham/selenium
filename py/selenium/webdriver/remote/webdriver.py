@@ -120,7 +120,7 @@ class WebDriver(object):
         response = self.execute(Command.NEW_SESSION, {
             'desiredCapabilities': desired_capabilities,
         })
-        self.session_id = response['sessionId']
+        self.session_id = response['from']
         self.capabilities = response['value']
 
     def _wrap_value(self, value):

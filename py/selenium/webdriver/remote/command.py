@@ -31,7 +31,7 @@ class Command(object):
     GET_ALL_SESSIONS = "getAllSessions"
     DELETE_SESSION = "deleteSession"
     CLOSE = "close"
-    QUIT = "quit"
+    QUIT = "deleteSession"
     GET = "get"
     GO_BACK = "goBack"
     GO_FORWARD = "goForward"

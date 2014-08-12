@@ -44,7 +44,6 @@
     "toolkit.telemetry.enabled": false,
     "toolkit.telemetry.rejected": true,
     "marionette.defaultPrefs.enabled": true,
-    "marionette.defaultPrefs.port": 2828,
     "marionette.logging": true
   },
   "mutable": {

@@ -127,6 +127,7 @@ class FirefoxProfile(object):
             raise WebDriverException("Port needs to be an integer")
         self._port = port
         self.set_preference("webdriver_firefox_port", self._port)
+        self.set_preference("marionette.defaultPrefs.port", self._port)
 
     @property
     def accept_untrusted_certs(self):

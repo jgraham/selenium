@@ -24,6 +24,7 @@ from selenium.common.exceptions import NoAlertPresentException
 import unittest
 
 @pytest.mark.ignore_opera
+@pytest.mark.ignore_firefox
 class AlertsTest(unittest.TestCase):
 
     def testShouldBeAbleToOverrideTheWindowAlertMethod(self):
@@ -213,7 +214,7 @@ class AlertsTest(unittest.TestCase):
         value = alert.text
         alert.accept()
         self.assertEqual("cheese", value)
-    
+
     def _waitForAlert(self):
         return WebDriverWait(self.driver, 3).until(EC.alert_is_present())
 
