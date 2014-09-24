@@ -85,7 +85,7 @@ class ErrorHandler(object):
 
         :Raises: If the response contains an error message.
         """
-        status = response['status']
+        status = response.get('status', 0)
         if status == ErrorCode.SUCCESS:
             return
         exception_class = ErrorInResponseException

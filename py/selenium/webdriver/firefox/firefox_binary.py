@@ -135,6 +135,7 @@ class FirefoxBinary(object):
 
     def _get_firefox_start_cmd(self):
         """Return the command to start firefox."""
+        return "/Users/dburns/development/mozilla/mozilla-inbound/obj-ff-dbg/dist/Nightly.app/Contents/MacOS/firefox-bin"
         start_cmd = ""
         if platform.system() == "Darwin":
             start_cmd = ("/Applications/Firefox.app/Contents/MacOS/firefox-bin")

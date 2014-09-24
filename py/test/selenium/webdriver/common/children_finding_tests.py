@@ -43,11 +43,12 @@ class ChildrenFindingTests(unittest.TestCase):
     def testFindingDotSlashElementsOnElementByXPathShouldFindNotTopLevelElements(self):
         self._loadSimplePage()
         parent = self.driver.find_element_by_id("multiline")
+        import pdb; pdb.set_trace()
         children = parent.find_elements_by_xpath("./p")
         self.assertEqual(1, len(children))
         self.assertEqual("A div containing", children[0].text)
 
-    def testShouldFindElementsByXpath(self): 
+    def testShouldFindElementsByXpath(self):
         self._loadPage("nestedElements")
         element = self.driver.find_element_by_name("form2")
         children = element.find_elements_by_xpath("select/option")
@@ -93,11 +94,11 @@ class ChildrenFindingTests(unittest.TestCase):
         self.assertEqual(len(child), 2)
 
     def testShouldFindElementByIdWhenMultipleMatchesExist(self):
-        self._loadPage("nestedElements")    
+        self._loadPage("nestedElements")
         element = self.driver.find_element_by_id("test_id_div")
         child = element.find_element_by_id("test_id")
         self.assertEqual(child.text, "inside")
-    
+
     def testShouldFindElementByIdWhenNoMatchInContext(self):
         self._loadPage("nestedElements")
         element = self.driver.find_element_by_id("test_id_div")
@@ -114,7 +115,7 @@ class ChildrenFindingTests(unittest.TestCase):
         element = self.driver.find_element_by_name("div1")
         child = element.find_element_by_link_text("hello world")
         self.assertEqual(child.get_attribute("name"), "link1")
-    
+
     def testShouldFindElementsByLinkText(self):
         self._loadPage("nestedElements")
         element = self.driver.find_element_by_name("div1")

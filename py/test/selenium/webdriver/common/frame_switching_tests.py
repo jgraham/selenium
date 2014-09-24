@@ -32,6 +32,7 @@ def not_available_on_remote(func):
             return func(self)
     return testMethod
 
+@pytest.mark.ignore_firefox
 class FrameSwitchingTest(unittest.TestCase):
 
     def testShouldBeAbleToSwitchToAFrameByItsIndex(self):
@@ -181,7 +182,7 @@ class FrameSwitchingTest(unittest.TestCase):
     #    self.driver.find_element_by_link_text("top").click()
     #    time.sleep(1)
     #    self.assertEqual("XHTML Test Page", self.driver.title)
-    #    self.assertEqual("XHTML Test Page", 
+    #    self.assertEqual("XHTML Test Page",
     #    self.driver.find_element_by_xpath("/html/head/title").text)
 
     def testThatWeShouldNotAutoSwitchFocusToAnIFrameWhenAPageContainingThemIsLoaded(self):
