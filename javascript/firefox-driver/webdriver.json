@@ -1,5 +1,6 @@
 {
   "frozen": {
+    "browser.tabs.remote.autostart": true,
     "app.update.auto": false,
     "app.update.enabled": false,
     "browser.download.manager.showWhenStarting": false,

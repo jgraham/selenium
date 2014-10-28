@@ -64,7 +64,7 @@ class FirefoxBinary(object):
 
         self._start_from_profile_path(self.profile.path)
         self._wait_until_connectable()
- 
+
     def kill(self):
         """Kill the browser.
 
@@ -137,16 +137,16 @@ class FirefoxBinary(object):
 
         if not command:
             return ""
- 
+
         return shlex.split(command)[0]
 
     def _get_firefox_start_cmd(self):
         """Return the command to start firefox."""
         start_cmd = ""
         if platform.system() == "Darwin":
-            start_cmd = ("/Applications/Firefox.app/Contents/MacOS/firefox-bin")
+            start_cmd = ("/Applications/FirefoxNightly.app/Contents/MacOS/firefox-bin")
         elif platform.system() == "Windows":
-            start_cmd = (self._find_exe_in_registry() or 
+            start_cmd = (self._find_exe_in_registry() or
                 self._default_windows_location())
         elif platform.system() == 'Java' and os._name == 'nt':
             start_cmd = self._default_windows_location()
@@ -157,7 +157,7 @@ class FirefoxBinary(object):
                     break
             else:
                 # couldn't find firefox on the system path
-                raise RuntimeError("Could not find firefox in your system PATH." + 
+                raise RuntimeError("Could not find firefox in your system PATH." +
                     " Please specify the firefox binary location or install firefox")
         return start_cmd
 
@@ -197,7 +197,7 @@ class FirefoxBinary(object):
         return built_path
 
     def which(self, fname):
-        """Returns the fully qualified path by searching Path of the given 
+        """Returns the fully qualified path by searching Path of the given
         name"""
         for pe in os.environ['PATH'].split(os.pathsep):
             checkname = os.path.join(pe, fname)
