@@ -85,7 +85,7 @@ class ErrorHandler(object):
 
         :Raises: If the response contains an error message.
         """
-        status = response['status']
+        status = response.get('status', ErrorCode.SUCCESS)
         if status == ErrorCode.SUCCESS:
             return
         exception_class = ErrorInResponseException
@@ -129,36 +129,38 @@ class ErrorHandler(object):
             exception_class = MoveTargetOutOfBoundsException
         else:
             exception_class = WebDriverException
-        value = response['value']
-        if isinstance(value, basestring):
-            if exception_class == ErrorInResponseException:
-                raise exception_class(response, value)
-            raise exception_class(value)
+        value = response.get('value', None)
         message = ''
-        if 'message' in value:
-            message = value['message']
-
         screen = None
-        if 'screen' in value:
-            screen = value['screen']
-
         stacktrace = None
-        if 'stackTrace' in value and value['stackTrace']:
-            stacktrace = []
-            try:
-                for frame in value['stackTrace']:
-                    line = self._value_or_default(frame, 'lineNumber', '')
-                    file = self._value_or_default(frame, 'fileName', '<anonymous>')
-                    if line:
-                        file = "%s:%s" % (file, line)
-                    meth = self._value_or_default(frame, 'methodName', '<anonymous>')
-                    if 'className' in frame:
-                        meth = "%s.%s" % (frame['className'], meth)
-                    msg = "    at %s (%s)"
-                    msg = msg % (meth, file)
-                    stacktrace.append(msg)
-            except TypeError:
-                pass
+        if value:
+            if isinstance(value, basestring):
+                if exception_class == ErrorInResponseException:
+                    raise exception_class(response, value)
+                raise exception_class(value)
+
+            if 'message' in value:
+                message = value['message']
+
+            if 'screen' in value:
+                screen = value['screen']
+
+            if 'stackTrace' in value and value['stackTrace']:
+                stacktrace = []
+                try:
+                    for frame in value['stackTrace']:
+                        line = self._value_or_default(frame, 'lineNumber', '')
+                        file = self._value_or_default(frame, 'fileName', '<anonymous>')
+                        if line:
+                            file = "%s:%s" % (file, line)
+                        meth = self._value_or_default(frame, 'methodName', '<anonymous>')
+                        if 'className' in frame:
+                            meth = "%s.%s" % (frame['className'], meth)
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
         if exception_class == ErrorInResponseException:
             raise exception_class(response, message)
         elif exception_class == UnexpectedAlertPresentException and 'alert' in value:
