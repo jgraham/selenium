@@ -45,7 +45,7 @@ class Service(object):
 
         if self.port == 0:
             self.port = 4444 #utils.free_port()
-        self.env = {"RUST_LOG": "DEBUG"}
+        self.env = env
 
     def start(self):
         """
@@ -55,13 +55,12 @@ class Service(object):
          - WebDriverException : Raised either when it can't start the service
            or when it can't connect to the service
         """
-        env = os.environ
-        env['RUST_LOG'] = 'DEBUG'
+        env = self.env or os.environ
         try:
             #import pdb; pdb.set_trace()
             self.process = subprocess.Popen([
               self.path,
-              "-b", self.firefox_binary],
+              "-b", self.firefox_binary],# '--webdriver-port', "%d" % self.port],
               env=env)
         except Exception as e:
             raise WebDriverException(
@@ -95,7 +94,7 @@ class Service(object):
             return
 
         #Tell the Server to die!
-        try:
+        '''try:
             from urllib import request as url_request
         except ImportError:
             import urllib2 as url_request
@@ -107,7 +106,7 @@ class Service(object):
                break
             count += 1
             time.sleep(1)
-
+        '''
         #Tell the Server to properly die in case
         try:
             if self.process:
