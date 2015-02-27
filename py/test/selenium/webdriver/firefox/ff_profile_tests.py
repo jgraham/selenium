@@ -14,7 +14,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+'''
 import base64
 import os
 import unittest
@@ -224,3 +224,4 @@ def teardown_module(module):
         TestFirefoxProfile.driver.quit()
     except:
         pass #Don't Care since we may have killed the browser above
+'''

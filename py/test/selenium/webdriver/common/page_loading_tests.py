@@ -18,29 +18,31 @@ import pytest
 
 from selenium.webdriver.common.by import By
 
+@pytest.mark.ignore_firefox
 class PageLoadingTests(unittest.TestCase):
 
     def testShouldWaitForDocumentToBeLoaded(self):
         self._loadSimplePage()
-        
+
         self.assertEqual(self.driver.title, "Hello WebDriver")
-  
+
     # Disabled till Java WebServer is used
     #def testShouldFollowRedirectsSentInTheHttpResponseHeaders(self):
     #    self.driver.get(pages.redirectPage);
     #    self.assertEqual(self.driver.title, "We Arrive Here")
-  
+
     # Disabled till the Java WebServer is used
     #def testShouldFollowMetaRedirects(self):
     #    self._loadPage("metaRedirect")
     #    self.assertEqual(self.driver.title, "We Arrive Here")
 
+    '''
     def testShouldBeAbleToGetAFragmentOnTheCurrentPage(self):
         self._loadPage("xhtmlTest")
         location = self.driver.current_url
         self.driver.get(location + "#text")
         self.driver.find_element(by=By.ID, value="id1")
-
+    '''
     @pytest.mark.ignore_safari
     def testShouldReturnWhenGettingAUrlThatDoesNotResolve(self):
         try:
@@ -48,7 +50,7 @@ class PageLoadingTests(unittest.TestCase):
           self.driver.get("http://www.thisurldoesnotexist.comx/")
         except ValueError:
             pass
-    
+
     @pytest.mark.ignore_safari
     def testShouldReturnWhenGettingAUrlThatDoesNotConnect(self):
         # Here's hoping that there's nothing here. There shouldn't be
@@ -57,7 +59,7 @@ class PageLoadingTests(unittest.TestCase):
       #@Ignore({IE, IPHONE, SELENESE})
       #def testShouldBeAbleToLoadAPageWithFramesetsAndWaitUntilAllFramesAreLoaded() {
       #  self.driver.get(pages.framesetPage);
-    
+
       #  self.driver.switchTo().frame(0);
       #  WebElement pageNumber = self.driver.findElement(By.xpath("#span[@id='pageNumber']"));
       #  self.assertEqual((pageNumber.getText().trim(), equalTo("1"));

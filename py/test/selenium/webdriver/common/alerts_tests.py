@@ -25,6 +25,7 @@ from selenium.common.exceptions import UnexpectedAlertPresentException
 import unittest
 
 @pytest.mark.ignore_opera
+@pytest.mark.ignore_firefox
 class AlertsTest(unittest.TestCase):
 
     def testShouldBeAbleToOverrideTheWindowAlertMethod(self):
@@ -45,7 +46,7 @@ class AlertsTest(unittest.TestCase):
 
     def testShouldAllowUsersToAcceptAnAlertManually(self):
         self._loadPage("alerts")
-        self.driver.find_element(by=By.ID, value="alert").click()
+        self.driver.find_element(by=By.CSS_SELECTOR, value="#alert").click()
         alert = self._waitForAlert()
         alert.accept()
         #  If we can perform any action, we're good to go
@@ -53,7 +54,7 @@ class AlertsTest(unittest.TestCase):
 
     def testShouldAllowUsersToAcceptAnAlertWithNoTextManually(self):
         self._loadPage("alerts")
-        self.driver.find_element(By.ID,"empty-alert").click();
+        self.driver.find_element(By.CSS_SELECTOR,"#empty-alert").click();
         alert = self._waitForAlert()
         alert.accept()
 
@@ -77,7 +78,7 @@ class AlertsTest(unittest.TestCase):
     @pytest.mark.ignore_chrome
     def testShouldAllowUsersToDismissAnAlertManually(self):
         self._loadPage("alerts")
-        self.driver.find_element(by=By.ID, value="alert").click()
+        self.driver.find_element(by=By.CSS_SELECTOR, value="#alert").click()
         alert = self._waitForAlert()
         alert.dismiss()
         #  If we can perform any action, we're good to go
@@ -85,7 +86,7 @@ class AlertsTest(unittest.TestCase):
 
     def testShouldAllowAUserToAcceptAPrompt(self):
         self._loadPage("alerts")
-        self.driver.find_element(by=By.ID, value="prompt").click()
+        self.driver.find_element(by=By.CSS_SELECTOR, value="#prompt").click()
         alert = self._waitForAlert()
         alert.accept()
 
@@ -214,7 +215,7 @@ class AlertsTest(unittest.TestCase):
         value = alert.text
         alert.accept()
         self.assertEqual("cheese", value)
-    
+
     def testUnexpectedAlertPresentExceptionContainsAlertText(self):
         self._loadPage("alerts")
         self.driver.find_element(by=By.ID, value="alert").click()

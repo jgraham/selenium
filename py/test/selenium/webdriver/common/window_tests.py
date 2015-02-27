@@ -24,6 +24,7 @@ class WindowTests(unittest.TestCase):
     @pytest.mark.ignore_chrome
     @pytest.mark.ignore_opera
     @pytest.mark.ignore_ie
+    @pytest.mark.ignore_firefox
     def testShouldMaximizeTheWindow(self):
         resize_timeout = 5
         wait = WebDriverWait(self.driver, resize_timeout)
