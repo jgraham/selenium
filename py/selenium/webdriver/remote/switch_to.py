@@ -83,4 +83,4 @@ class SwitchTo:
         :Usage:
             driver.switch_to.window('main')
         """
-        self._driver.execute(Command.SWITCH_TO_WINDOW, {'name': window_name})
+        self._driver.execute(Command.SWITCH_TO_WINDOW, {'handle': window_name, 'name': window_name})
