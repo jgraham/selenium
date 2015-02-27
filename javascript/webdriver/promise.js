@@ -153,7 +153,7 @@ promise.Thenable = function() {};
 
 /**
  * Cancels the computation of this promise's value, rejecting the promise in the
- * process. This method is a no-op if the promise has alreayd been resolved.
+ * process. This method is a no-op if the promise has already been resolved.
  *
  * @param {(string|promise.CancellationError)=} opt_reason The reason this
  *     promise is being cancelled.
@@ -849,11 +849,10 @@ promise.rejected = function(opt_reason) {
 
 
 /**
- * Wraps a function that is assumed to be a node-style callback as its final
- * argument. This callback takes two arguments: an error value (which will be
+ * Wraps a function that expects a node-style callback as its final
+ * argument. This callback expects two arguments: an error value (which will be
  * null if the call succeeded), and the success value as the second argument.
- * If the call fails, the returned promise will be rejected, otherwise it will
- * be resolved with the result.
+ * The callback will the resolve or reject the returned promise, based on its arguments.
  * @param {!Function} fn The function to wrap.
  * @param {...?} var_args The arguments to apply to the function, excluding the
  *     final callback.

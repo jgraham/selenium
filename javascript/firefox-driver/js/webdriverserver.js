@@ -51,9 +51,10 @@ WebDriverServer = function() {
     goog.log.warning(WebDriverServer.LOG_, 'Failed to create HTTP server', e);
   }
 
-  this.server_.registerGlobHandler('.*/hub/.*', { handle: function(request, response) {
+  this.server_.registerPrefixHandler('/hub/', { handle: function(request, response) {
     response.processAsync();
-    dispatcher_.dispatch(new Request(request), new Response(response));
+    dispatcher_.dispatch(
+        new fxdriver.Request(request), new fxdriver.Response(response));
   }});
 };
 

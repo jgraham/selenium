@@ -58,7 +58,14 @@ test.suite(function(env) {
           assert(position.y).equalTo(0);
         });
       } else {
-        driver.wait(forPositionToBe(position.x + 10, position.y + 10), 1000);
+        var dx = position.x + 10;
+        var dy = position.y + 10;
+        // On OSX, Safari position's the window relative to below the menubar
+        // at the top of the screen, which is 23 pixels tall.
+        if (env.currentBrowser() === Browser.SAFARI &&
+            process.platform === 'darwin') {
+          dy += 23;
+        }
       }
     });
   });
@@ -77,7 +84,15 @@ test.suite(function(env) {
           assert(position.y).equalTo(0);
         });
       } else {
-        driver.wait(forPositionToBe(position.x + 10, position.y + 10), 1000);
+        var dx = position.x + 10;
+        var dy = position.y + 10;
+        // On OSX, Safari position's the window relative to below the menubar
+        // at the top of the screen, which is 23 pixels tall.
+        if (env.currentBrowser() === Browser.SAFARI &&
+            process.platform === 'darwin') {
+          dy += 23;
+        }
+        driver.wait(forPositionToBe(dx, dy), 1000);
       }
     });
   });
@@ -103,7 +118,8 @@ test.suite(function(env) {
         return position.x === x &&
             // On OSX, the window height may be bumped down 22px for the top
             // status bar.
-           (position.y >= y && position.y <= (y + 22));
+            // On Linux, Opera's window position will be off by 28px.
+           (position.y >= y && position.y <= (y + 28));
       });
     };
   }

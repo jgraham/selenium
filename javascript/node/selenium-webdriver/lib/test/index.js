@@ -34,7 +34,9 @@ var NATIVE_BROWSERS = [
   webdriver.Browser.CHROME,
   webdriver.Browser.FIREFOX,
   webdriver.Browser.IE,
-  webdriver.Browser.PHANTOM_JS
+  webdriver.Browser.OPERA,
+  webdriver.Browser.PHANTOM_JS,
+  webdriver.Browser.SAFARI
 ];
 
 
@@ -118,6 +120,10 @@ function TestEnvironment(browserName, server) {
     return browserName;
   };
 
+  this.isRemote = function() {
+    return server || remoteUrl;
+  };
+
   this.browsers = function(var_args) {
     var browsersToIgnore = Array.prototype.slice.apply(arguments, [0]);
     return browsers(browserName, browsersToIgnore);
@@ -182,12 +188,18 @@ function suite(fn, opt_options) {
     browsers.forEach(function(browser) {
       testing.describe('[' + browser + ']', function() {
 
-        if (_base.isDevMode() && nativeRun &&
-            browser === webdriver.Browser.FIREFOX) {
-          testing.before(function() {
-            return build.of('//javascript/firefox-driver:webdriver')
-                .onlyOnce().go();
-          });
+        if (_base.isDevMode() && nativeRun) {
+          if (browser === webdriver.Browser.FIREFOX) {
+            testing.before(function() {
+              return build.of('//javascript/firefox-driver:webdriver')
+                  .onlyOnce().go();
+            });
+          } else if (browser === webdriver.Browser.SAFARI) {
+            testing.before(function() {
+              return build.of('//javascript/safari-driver:client')
+                  .onlyOnce().go();
+            });
+          }
         }
 
         var serverToUse = null;
@@ -213,9 +225,16 @@ function suite(fn, opt_options) {
 
 // GLOBAL TEST SETUP
 
+testing.before(function() {
+   // Do not pass register fileserver.start directly with testing.before,
+   // as start takes an optional port, which before assumes is an async
+   // callback.
+   return fileserver.start();
+});
 
-testing.before(fileserver.start);
-testing.after(fileserver.stop);
+testing.after(function() {
+   return fileserver.stop();
+});
 
 // PUBLIC API
 

@@ -49,7 +49,7 @@ end
 verbose($DEBUG)
 
 def version
-  "2.44.0"
+  "2.45.0"
 end
 ide_version = "2.8.0"
 
@@ -577,6 +577,7 @@ namespace :node do
     "//cpp:noblur",
     "//cpp:noblur64",
     "//javascript/firefox-driver:webdriver",
+    "//javascript/safari-driver:client",
     "//javascript/webdriver:asserts_lib",
     "//javascript/webdriver:webdriver_lib",
     "//javascript/webdriver:unit_test_lib"
@@ -595,6 +596,7 @@ namespace :node do
         " --resource=build/cpp/amd64/libnoblur64.so:firefox/amd64/libnoblur64.so" <<
         " --resource=build/cpp/i386/libnoblur.so:firefox/i386/libnoblur.so" <<
         " --resource=build/javascript/firefox-driver/webdriver.xpi:firefox/webdriver.xpi" <<
+        " --resource=build/javascript/safari-driver/client.js:safari/client.js" <<
         " --resource=third_party/closure/LICENSE:goog/LICENSE" <<
         " --resource=common/src/web/:test/data/" <<
         " --exclude_resource=common/src/web/Bin" <<

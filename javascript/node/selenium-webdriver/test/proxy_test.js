@@ -76,9 +76,18 @@ test.suite(function(env) {
     ].join(''), 'utf8', 'text/html; charset=UTF-8');
   });
 
-  test.before(proxyServer.start.bind(proxyServer));
-  test.before(helloServer.start.bind(helloServer));
-  test.before(goodbyeServer.start.bind(helloServer));
+  // Cannot pass start directly to mocha's before, as mocha will interpret the optional
+  // port parameter as an async callback parameter.
+  function mkStartFunc(server) {
+    return function() {
+      return server.start();
+    };
+  }
+
+
+  test.before(mkStartFunc(proxyServer));
+  test.before(mkStartFunc(helloServer));
+  test.before(mkStartFunc(goodbyeServer));
 
   test.after(proxyServer.stop.bind(proxyServer));
   test.after(helloServer.stop.bind(helloServer));
@@ -89,7 +98,7 @@ test.suite(function(env) {
   test.afterEach(function() { driver && driver.quit(); });
 
   // Proxy support not implemented.
-  test.ignore(env.browsers(Browser.IE, Browser.SAFARI)).
+  test.ignore(env.browsers(Browser.IE, Browser.OPERA, Browser.SAFARI)).
   describe('manual proxy settings', function() {
     // phantomjs 1.9.1 in webdriver mode does not appear to respect proxy
     // settings.
@@ -133,7 +142,8 @@ test.suite(function(env) {
 
   // PhantomJS does not support PAC file proxy configuration.
   // Safari does not support proxies.
-  test.ignore(env.browsers(Browser.IE, Browser.PHANTOM_JS, Browser.SAFARI)).
+  test.ignore(env.browsers(
+      Browser.IE, Browser.OPERA, Browser.PHANTOM_JS, Browser.SAFARI)).
   describe('pac proxy settings', function() {
     test.it('can configure proxy through PAC file', function() {
       driver = env.builder().
