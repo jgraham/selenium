@@ -130,8 +130,8 @@ class ErrorHandler(object):
         else:
             exception_class = WebDriverException
         value = response.get('value', None)
-        message = ''
-        screen = None
+        message = response.get("message", "")
+        screen = response.get("screen", "")
         stacktrace = None
         if value:
             if isinstance(value, basestring):
