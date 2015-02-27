@@ -121,7 +121,7 @@ class WebElement(object):
         :Args:
             - id_ - ID of child element to locate.
         """
-        return self.find_element(by=By.ID, value=id_)
+        return self.find_element(by=By.CSS_SELECTOR, value='#%s' % id_)
 
     def find_elements_by_id(self, id_):
         """Finds a list of elements within this element's children by ID.
@@ -129,7 +129,7 @@ class WebElement(object):
         :Args:
             - id_ - Id of child element to find.
         """
-        return self.find_elements(by=By.ID, value=id_)
+        return self.find_elements(by=By.CSS_SELECTOR, value='#%s' % id_)
 
     def find_element_by_name(self, name):
         """Finds element within this element's children by name.
@@ -145,7 +145,7 @@ class WebElement(object):
         :Args:
             - name - name property to search for.
         """
-        return self.find_elements(by=By.NAME, value=name)
+        return self.find_elements(by=By.CSS_SELECTOR, value='*[name=%s]' % name)
 
     def find_element_by_link_text(self, link_text):
         """Finds element within this element's children by visible link text.
@@ -185,7 +185,7 @@ class WebElement(object):
         :Args:
             - name - name of html tag (eg: h1, a, span)
         """
-        return self.find_element(by=By.TAG_NAME, value=name)
+        return self.find_element(by=By.CSS_SELECTOR, value=name)
 
     def find_elements_by_tag_name(self, name):
         """Finds a list of elements within this element's children by tag name.
@@ -193,7 +193,7 @@ class WebElement(object):
         :Args:
             - name - name of html tag (eg: h1, a, span)
         """
-        return self.find_elements(by=By.TAG_NAME, value=name)
+        return self.find_elements(by=By.CSS_SELECTOR, value=name)
 
     def find_element_by_xpath(self, xpath):
         """Finds element by xpath.
@@ -247,7 +247,7 @@ class WebElement(object):
         :Args:
             - name - class name to search for.
         """
-        return self.find_element(by=By.CLASS_NAME, value=name)
+        return self.find_element(by=By.CSS_SELECTOR, value='.%s' % name)
 
 
     def find_elements_by_class_name(self, name):
@@ -256,7 +256,7 @@ class WebElement(object):
         :Args:
             - name - class name to search for.
         """
-        return self.find_elements(by=By.CLASS_NAME, value=name)
+        return self.find_elements(by=By.CSS_SELECTOR, value='.%s' % name)
 
     def find_element_by_css_selector(self, css_selector):
         """Finds element within this element's children by CSS selector.

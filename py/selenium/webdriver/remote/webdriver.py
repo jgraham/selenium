@@ -205,7 +205,7 @@ class WebDriver(object):
         :Usage:
             driver.find_element_by_id('foo')
         """
-        return self.find_element(by=By.ID, value=id_)
+        return self.find_element(by=By.CSS_SELECTOR, value='#%s' % id_)
 
     def find_elements_by_id(self, id_):
         """
@@ -217,7 +217,7 @@ class WebDriver(object):
         :Usage:
             driver.find_element_by_id('foo')
         """
-        return self.find_elements(by=By.ID, value=id_)
+        return self.find_elements(by=By.CSS_SELECTOR, value='#%s' % id_)
 
     def find_element_by_xpath(self, xpath):
         """
@@ -301,7 +301,7 @@ class WebDriver(object):
         :Usage:
             driver.find_element_by_name('foo')
         """
-        return self.find_element(by=By.NAME, value=name)
+        return self.find_element(by=By.CSS_SELECTOR, value='*[name=%s]' % name)
 
     def find_elements_by_name(self, name):
         """
@@ -313,7 +313,7 @@ class WebDriver(object):
         :Usage:
             driver.find_elements_by_name('foo')
         """
-        return self.find_elements(by=By.NAME, value=name)
+        return self.find_elements(by=By.CSS_SELECTOR, value='*[name=%s]' % name)
 
     def find_element_by_tag_name(self, name):
         """
@@ -325,7 +325,7 @@ class WebDriver(object):
         :Usage:
             driver.find_element_by_tag_name('foo')
         """
-        return self.find_element(by=By.TAG_NAME, value=name)
+        return self.find_element(by=By.CSS_SELECTOR, value=name)
 
     def find_elements_by_tag_name(self, name):
         """
@@ -337,7 +337,7 @@ class WebDriver(object):
         :Usage:
             driver.find_elements_by_tag_name('foo')
         """
-        return self.find_elements(by=By.TAG_NAME, value=name)
+        return self.find_elements(by=By.CSS_SELECTOR, value=name)
 
     def find_element_by_class_name(self, name):
         """
@@ -349,7 +349,7 @@ class WebDriver(object):
         :Usage:
             driver.find_element_by_class_name('foo')
         """
-        return self.find_element(by=By.CLASS_NAME, value=name)
+        return self.find_element(by=By.CSS_SELECTOR, value='.%s' % name)
 
     def find_elements_by_class_name(self, name):
         """
@@ -361,7 +361,7 @@ class WebDriver(object):
         :Usage:
             driver.find_elements_by_class_name('foo')
         """
-        return self.find_elements(by=By.CLASS_NAME, value=name)
+        return self.find_elements(by=By.CSS_SELECTOR, value='.%s' % name)
 
     def find_element_by_css_selector(self, css_selector):
         """
@@ -659,7 +659,17 @@ class WebDriver(object):
         """
         if not By.is_valid(by) or not isinstance(value, str):
             raise InvalidSelectorException("Invalid locator values passed in")
-
+        if by == By.ID:
+            by = By.CSS_SELECTOR
+            value = '#%s' % value
+        elif by == By.TAG_NAME:
+            by = By.CSS_SELECTOR
+        elif by == By.CLASS_NAME:
+            by = By.CSS_SELECTOR
+            value = ".%s" % value
+        elif by == By.NAME:
+            by = By.CSS_SELECTOR
+            value = "*[name=%s]" % value
         return self.execute(Command.FIND_ELEMENT,
                              {'using': by, 'value': value})['value']
 
@@ -674,6 +684,18 @@ class WebDriver(object):
         """
         if not By.is_valid(by) or not isinstance(value, str):
             raise InvalidSelectorException("Invalid locator values passed in")
+
+        if by == By.ID:
+            by = By.CSS_SELECTOR
+            value = '#%s' % value
+        elif by == By.TAG_NAME:
+            by = By.CSS_SELECTOR
+        elif by == By.CLASS_NAME:
+            by = By.CSS_SELECTOR
+            value = ".%s" % value
+        elif by == By.NAME:
+            by = By.CSS_SELECTOR
+            value = "*[name=%s]" % value
 
         return self.execute(Command.FIND_ELEMENTS,
                              {'using': by, 'value': value})['value']
