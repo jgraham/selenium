@@ -582,7 +582,7 @@ class WebDriver(object):
         :Usage:
             driver.delete_cookie('my_cookie')
         """
-        self.execute(Command.DELETE_COOKIE, {'name': name})
+        self.execute(Command.ADD_COOKIE, {"name": name, "value":"", "expiry":0})
 
     def delete_all_cookies(self):
         """
@@ -591,7 +591,9 @@ class WebDriver(object):
         :Usage:
             driver.delete_all_cookies()
         """
-        self.execute(Command.DELETE_ALL_COOKIES)
+        cookies = self.get_cookies()
+        for cookie in cookies:
+            self.delete_cookie(name)
 
     def add_cookie(self, cookie_dict):
         """
@@ -607,7 +609,7 @@ class WebDriver(object):
             driver.add_cookie({'name' : 'foo', 'value' : 'bar', 'path' : '/', 'secure':True})
 
         """
-        self.execute(Command.ADD_COOKIE, {'cookie': cookie_dict})
+        self.execute(Command.ADD_COOKIE, cookie_dict)
 
     # Timeouts
     def implicitly_wait(self, time_to_wait):
