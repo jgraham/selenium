@@ -34,7 +34,7 @@ class WebDriver(RemoteWebDriver):
     # There is no native event support on Mac
     NATIVE_EVENTS_ALLOWED = sys.platform != "darwin"
 
-    def __init__(self, firefox_profile=None, firefox_binary='/Users/dburns/development/mozilla/mozilla-inbound/obj-ff-dbg/dist/Nightly.app/Contents/MacOS/firefox', timeout=30,
+    def __init__(self, firefox_profile=None, firefox_binary='/home/jgraham/develop/gecko/obj-x86_64-unknown-linux-gnu/dist/bin/firefox', timeout=30,
                  capabilities=None, proxy=None, executable_path='wires'):
 
         self.binary = firefox_binary

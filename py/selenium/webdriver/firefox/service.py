@@ -56,11 +56,13 @@ class Service(object):
            or when it can't connect to the service
         """
         env = self.env or os.environ
+        # env["RUST_LOG"] = "debug"
         try:
             #import pdb; pdb.set_trace()
             self.process = subprocess.Popen([
-              self.path,
-              "-b", self.firefox_binary, '--webdriver-port', "%d" % self.port],
+                self.path,
+                "-b", self.firefox_binary,
+                '--webdriver-port', "%d" % self.port],
               env=env)
         except Exception as e:
             raise WebDriverException(
