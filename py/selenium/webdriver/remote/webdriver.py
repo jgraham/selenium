@@ -625,7 +625,8 @@ class WebDriver(object):
         :Usage:
             driver.implicitly_wait(30)
         """
-        self.execute(Command.IMPLICIT_WAIT, {'ms': float(time_to_wait) * 1000})
+        self.execute(Command.SET_TIMEOUTS, {"type": "implicit",
+                                            "ms": float(time_to_wait) * 1000})
 
     def set_script_timeout(self, time_to_wait):
         """
@@ -638,8 +639,9 @@ class WebDriver(object):
         :Usage:
             driver.set_script_timeout(30)
         """
-        self.execute(Command.SET_SCRIPT_TIMEOUT,
-            {'ms': float(time_to_wait) * 1000})
+        self.execute(Command.SET_TIMEOUTS,
+            {"type": "script",
+             "ms": float(time_to_wait) * 1000})
 
     def set_page_load_timeout(self, time_to_wait):
         """
