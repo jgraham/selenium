@@ -254,15 +254,15 @@ class RemoteConnection(object):
             Command.MOVE_TO:
                 ('POST', '/session/$sessionId/moveto'),
             Command.GET_WINDOW_SIZE:
-                ('GET', '/session/$sessionId/window/$windowHandle/size'),
+                ('GET', '/session/$sessionId/window/size'),
             Command.SET_WINDOW_SIZE:
-                ('POST', '/session/$sessionId/window/$windowHandle/size'),
+                ('POST', '/session/$sessionId/window/size'),
             Command.GET_WINDOW_POSITION:
-                ('GET', '/session/$sessionId/window/$windowHandle/position'),
+                ('GET', '/session/$sessionId/window/position'),
             Command.SET_WINDOW_POSITION:
-                ('POST', '/session/$sessionId/window/$windowHandle/position'),
+                ('POST', '/session/$sessionId/window/position'),
             Command.MAXIMIZE_WINDOW:
-                ('POST', '/session/$sessionId/window/$windowHandle/maximize'),
+                ('POST', '/session/$sessionId/window/maximize'),
             Command.SET_SCREEN_ORIENTATION:
                 ('POST', '/session/$sessionId/orientation'),
             Command.GET_SCREEN_ORIENTATION:
