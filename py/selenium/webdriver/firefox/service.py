@@ -44,7 +44,7 @@ class Service(object):
         self.service_args = service_args or []
 
         if self.port == 0:
-            self.port = 4444 #utils.free_port()
+            self.port = utils.free_port()
         self.env = env
 
     def start(self):
@@ -60,7 +60,7 @@ class Service(object):
             #import pdb; pdb.set_trace()
             self.process = subprocess.Popen([
               self.path,
-              "-b", self.firefox_binary],# '--webdriver-port', "%d" % self.port],
+              "-b", self.firefox_binary, '--webdriver-port', "%d" % self.port],
               env=env)
         except Exception as e:
             raise WebDriverException(
